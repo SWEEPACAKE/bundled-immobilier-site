@@ -22,11 +22,9 @@ services:
     ports:
       - "8080:80"
     # On fait une correspondance entre le dossier src de notre machine et le dossier /var/www/html du serveur apahce du conteneur
-    # On fait également une correspondance pour la config de msmtprc
     volumes:
       - ./api/public:/var/www/html/public
       - ./api/.env:/var/www/html/.env
-      - ./api/msmtprc:/etc/msmtprc
     environment:
       PHP_IDE_CONFIG: "serverName=docker"
     depends_on:

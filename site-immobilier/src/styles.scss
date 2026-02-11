@@ -20,10 +20,10 @@ body {
     color: $blanc;
     &:disabled {
         border-color: $orange;
-        background-color: darken($orange, 20%);
+        background-color: $orange;
     }
     &:hover {
         border-color: $orange;
-        background-color: darken($orange, 5%);
+        background-color: $orange;
     }
 }
