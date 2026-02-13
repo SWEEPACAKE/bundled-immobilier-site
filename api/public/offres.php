@@ -14,17 +14,20 @@ if(!empty($_GET)) {
         $condition .= " AND LOWER(ville) = ?";
         $array_params[] = strtolower($_GET['localisation']);
     }
-    if(array_key_exists('budget', $_GET) && isset($_GET['budget'])) {
+    if(array_key_exists('budget', $_GET) && isset($_GET['budget']) && $_GET['budget'] != 0) {
         $budget_min = (float) $_GET['budget'] * 0.95;
         $budget_max = (float) $_GET['budget'] * 1.05;
         $condition .= " AND prix BETWEEN ? AND ? ";
         $array_params[] = $budget_min;
         $array_params[] = $budget_max;
     }
-    if(array_key_exists('vente', $_GET) && isset($_GET['vente'])) {
-        $condition .= " AND isAVendre = 1";
-    }
-    if(array_key_exists('location', $_GET) && isset($_GET['location'])) {
+    if($_GET['vente'] == 'true') {
+        if($_GET['location'] == 'true') {
+            $condition .= " AND (isAVendre = 1 OR isALouer = 1) ";
+        } else {
+            $condition .= " AND isAVendre = 1 ";
+        }
+    } else if($_GET['location'] == 'true') {
         $condition .= " AND isALouer = 1";
     }
 }

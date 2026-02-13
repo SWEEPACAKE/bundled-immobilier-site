@@ -1,10 +1,12 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ApiService } from '../../services/api-service';
 import { TypeModel } from '../../models/type-model';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -12,8 +14,19 @@ export class Header implements OnInit {
 
   mesTypes = signal<TypeModel[]>([]);
   mesVilles = signal<any[]>([]);
+  formulaire: FormGroup = new FormGroup({});
 
-  constructor(private monApiService: ApiService) {}
+  constructor(private monApiService: ApiService, private fb: FormBuilder, private router: Router) {
+
+    this.formulaire = this.fb.group({
+      type: [''],
+      localisation: [''],
+      budget: [0],
+      vente: [false],
+      location: [false]
+    });
+
+  }
 
   ngOnInit(): void {
 
@@ -31,6 +44,18 @@ export class Header implements OnInit {
       }
     });
 
+  }
+
+  envoyerFormulaire() {
+    this.router.navigate(['/nos-offres'], {
+      queryParams: {
+        type: this.formulaire.value.type,
+        localisation: this.formulaire.value.localisation,
+        budget: this.formulaire.value.budget,
+        vente: this.formulaire.value.vente,
+        location: this.formulaire.value.location
+      }
+    });
   }
 
 }

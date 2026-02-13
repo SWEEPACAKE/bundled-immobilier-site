@@ -28,8 +28,20 @@ export class ApiService {
     });
   }
 
-  getOffres () {
-    return this.monHttpClient.get(`${this.baseUrl}offres.php`, {
+  getOffres(type: string = '', localisation: string = '', budget: number = 0, vente: boolean = false, location: boolean = false) {
+
+    let url = `${this.baseUrl}offres.php?vente=${vente}&location=${location}`;
+
+    if(type !== '') {
+      url += `&type=${type}`;
+    }
+    if(localisation !== '') {
+      url += `&localisation=${localisation}`;
+    }
+    if(budget != 0) {
+      url += `&budget=${budget}`;
+    }
+    return this.monHttpClient.get(url, {
       responseType: 'text'
     });
   }

@@ -1,22 +1,17 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { Navbar } from "./components/navbar/navbar";
-import { Header } from "./components/header/header";
 import { AuthService } from './services/auth-service';
-import { ApiService } from './services/api-service';
-import { QuiSommesNous } from "./components/qui-sommes-nous/qui-sommes-nous";
-import { NosOffres } from "./components/nos-offres/nos-offres";
-import { Footer } from "./components/footer/footer";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [Navbar, Header, QuiSommesNous, NosOffres, Footer],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
   protected readonly title = signal('site-immobilier');
 
-  constructor(private monAuthService: AuthService, private monApiService: ApiService){}
+  constructor(private monAuthService: AuthService){}
 
   ngOnInit(): void {
     this.monAuthService.fetchJwtToken().subscribe({
